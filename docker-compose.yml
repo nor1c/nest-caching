@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  app:
+    build: .
+    command: yarn start:dev
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: mysql://root:root@localhost:3306/nest-caching
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - .:/app/
+      - /app/node_modules
+
+  db:
+    container_name: nest-caching-db
+    image: "mariadb:latest"
+    ports:
+      - "3306:3306"
+    environment:
+      - MARIADB_ROOT_PASSWORD=root
+      - MARIADB_DATABASE=nest-caching
+    
+  redis:
+    container_name: nest-caching-redis
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
