@@ -1,14 +1,15 @@
 import { Controller, Get } from '@nestjs/common'
 
-import { User } from '@prisma/client'
-import prisma from '../../config/database/client.prisma'
+import { UserService } from './user.service'
 
 @Controller('user')
 export class UserController {
-  @Get('/')
-  async getAll(): Promise<User[]> {
+  constructor(private readonly userService: UserService) {}
+
+  @Get()
+  async getAll(): Promise<any> {
     try {
-      const users = await prisma.user.findMany()
+      const users = await this.userService.getAll()
 
       return users
     } catch (error) {
