@@ -8,15 +8,8 @@ export class UserService {
   constructor(@Inject(CACHE_MANAGER) private readonly cacheManager: Cache) {}
 
   async getAll() {
-    let cachedUsers = await this.cacheManager.get('user_all')
-
-    if (typeof cachedUsers === 'undefined') {
-      const users = await prisma.user.findMany()
-      await this.cacheManager.set('user_all', users)
-
-      cachedUsers = await this.cacheManager.get('user_all')
-    }
-
-    return cachedUsers
+    const users = await prisma.user.findMany()
+    
+    return users
   }
 }
