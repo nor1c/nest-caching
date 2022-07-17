@@ -10,8 +10,8 @@ import { UserService } from './user/user.service'
     UserModule, 
     CacheModule.register({
       ttl: 30
-    }
-  )],
+    })
+  ],
   controllers: [AppController, UserController],
   providers: [AppService, UserService]
 })
